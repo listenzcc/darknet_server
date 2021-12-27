@@ -13,9 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import path, re_path
 from django.contrib import admin
-from django.urls import path
+from django.contrib.staticfiles.views import serve
+
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
+    path('index.html', views.index),
+    path('favicon.ico', serve, {'path': 'icon/favicon.ico'}),
+    re_path(r'^picUrl/[0-9]{4}/$', views.pic_url),
 ]

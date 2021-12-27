@@ -1,3 +1,6 @@
 server/db.sqlite3
+server/data
 __pycache__
+darknet_release
 buffer
+.vscode
