@@ -45,15 +45,13 @@
             ></canvas>
         </div>
 
-        <div></div>
-
         <div id="Gallery-1"></div>
 
         <script>
             const input2Onclick = () => {
                 console.log("input-2 is clicked.");
                 const picUrl = document.getElementById("input-1").value;
-                parsePic(picUrl);
+                explainPic(picUrl);
             };
         </script>
 
@@ -61,7 +59,7 @@
             const array = [];
 
             async function fun1() {
-                await d3.json("listWallHaven/thumb/").then((raw) => {
+                await d3.json("listWallHaven/json/").then((raw) => {
                     console.log(raw);
                     for (let i in raw.thumb) {
                         array.push(
@@ -96,13 +94,16 @@
                         return "Finish";
                     })
                     .on("click", (e, d) => {
-                        console.log("Click", d);
-                        const picUrl =
-                            "http://" +
-                            location.host +
-                            "/getWallHaven/thumb/?" +
-                            d.thumb;
-                        parsePic(picUrl);
+                        console.log("Clicked", d);
+                        // Thumb
+                        // const picUrl = d.thumb;
+                        // const method = "Thumb";
+                        // explainPic(picUrl, method);
+
+                        // FullSize
+                        const picUrl = d.fullSize;
+                        const method = "FullSize";
+                        explainPic(picUrl, method);
                     });
             });
 

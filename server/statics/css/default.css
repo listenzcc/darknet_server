@@ -5,11 +5,13 @@ div {
 div#Gallery-1 {
     display: flex;
     flex-wrap: wrap;
+    max-height: 5in;
+    overflow-y: scroll;
 }
 
 canvas.thumbPaint {
-    /* width: 200px;
-    height: 200px; */
+    width: 200px;
+    height: 200px;
     background-color: darkgreen;
     margin: 5px;
 }

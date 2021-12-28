@@ -21,10 +21,13 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', views.index),
     path('index.html', views.index),
     path('favicon.ico', serve, {'path': 'icon/favicon.ico'}),
-    re_path(r'^parsePic/url/$', views.parse_pic_url),
-    re_path(r'^listWallHaven/thumb/$', views.list_wall_haven_thumb),
-    re_path(r'^getWallHaven/thumb/$', views.get_wall_haven_thumb)
+
+    re_path(r'^explainPic/get/$', views.explain_pic_url),
+
+    re_path(r'^listWallHaven/json/$', views.list_wall_haven),
+    re_path(r'^wallHavenThumb/get/$', views.get_wall_haven_thumb)
 ]

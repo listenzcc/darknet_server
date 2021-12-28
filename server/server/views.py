@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 
 from .settings import BASE_DIR, WallHaven_DIR
-from .tool.get_pic import get_pic, mk_buffer
+from .tool.get_pic import get_pic, mk_base64
 
 
 def index(request):
@@ -14,34 +14,32 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def parse_pic_url(request):
-    # Parse the picture as the picUrl
-    print(request)
-    picUrl = request.get_full_path()[len(request.path)+1:]
-    image_buffer, ext = get_pic(picUrl)
+def explain_pic_url(request):
+    # Explain the picture as the picUrl
+    # print(request)
+    print(request.GET)
+    # picUrl = request.get_full_path()[len(request.path)+1:]
+    picUrl = request.GET['picUrl']
+    method = request.GET['method']
+    print(picUrl, method)
+    image_buffer, ext = get_pic(picUrl, method, WallHaven_DIR)
     return HttpResponse(image_buffer, content_type="image/{}".format(ext))
 
 
-def list_wall_haven_thumb(request):
+def list_wall_haven(request):
     # List all the thumb pictures,
     # and their fullSize partners.
-    # !!! It is an very **unsafe** matching method
-    files = [e.name for e in WallHaven_DIR.joinpath('assets/_thumb').iterdir()]
-    files_full = [e.name for e in WallHaven_DIR.joinpath(
-        'assets/_fullSize').iterdir()]
-
-    df = pd.DataFrame(files, columns=['thumb'])
-    df['fullSize'] = files_full
-
+    df = pd.read_csv(WallHaven_DIR.joinpath('assets.csv'))
     print(df)
+
     return HttpResponse(df.to_json(), content_type="json")
 
 
 def get_wall_haven_thumb(request):
     # Get the buffer of the thumbnail picture of the name
-    name = request.get_full_path()[len(request.path)+1:]
+    name = request.GET['thumbPic']
     path = WallHaven_DIR.joinpath('assets/_thumb').joinpath(name)
-    image_buffer, ext = mk_buffer(path)
+    image_buffer, ext = mk_base64(path)
     return HttpResponse(image_buffer, content_type="image/{}".format(ext))
 
 
