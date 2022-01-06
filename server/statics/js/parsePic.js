@@ -26,7 +26,7 @@ const explainPic = (
 
 // Get the thumbPic,
 // and draw the picture's base64 into the ctxName
-const thumbPic = (thumbPic, ctxName, width = 200, height = 100) => {
+const thumbPic = (thumbPic, ctxName, width = 200, height = 200) => {
     console.log("Thumbing", thumbPic);
     $.ajax({
         type: "GET",
@@ -34,10 +34,10 @@ const thumbPic = (thumbPic, ctxName, width = 200, height = 100) => {
         data: { thumbPic },
         success: (data) => {
             console.log("GET Success, got data:", data.length);
-            var ctx = document.querySelector(ctxName).getContext("2d");
-            var img1 = new Image();
+            const ctx = document.querySelector(ctxName).getContext("2d");
+            const img1 = new Image();
             img1.onload = function () {
-                ctx.drawImage(img1, 10, 10, width - 20, height - 20);
+                ctx.drawImage(img1, 0, 0, this.width, this.height);
             };
             img1.src = data;
         },
